@@ -14,7 +14,9 @@ type Source struct {
 }
 
 type Target struct {
-	Filename string
+	Filename      string
+	PortraitSize  string `yaml:"portrait_size"`
+	LandscapeSize string `yaml:"landscape_size"`
 }
 
 type Profile struct {

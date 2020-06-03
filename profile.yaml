@@ -1,0 +1,9 @@
+source:
+  include:
+    - ".*\\.jpe?g"
+  exclude:
+    - ".*large\\..*"
+target:
+  filename: "{{ .Stem }}.large{{ .Ext }}"
+  portrait_size: "500x"
+  landscape_size: "1000x"

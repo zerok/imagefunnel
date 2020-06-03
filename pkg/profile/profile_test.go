@@ -37,3 +37,21 @@ func TestProfileMatching(t *testing.T) {
 		require.False(t, p.Matches("something.large.jpg"))
 	})
 }
+
+func TestProfileOutputFileName(t *testing.T) {
+	t.Run("simple", func(t *testing.T) {
+		p := Profile{
+			Source: Source{
+				Include: []string{".*\\.jpg"},
+				Exclude: []string{".*large.*"},
+			},
+			Target: Target{
+				Filename: "{{ .Stem }}.large{{ .Ext }}",
+			},
+		}
+		target, err := p.CalculateTargetFilename("something.jpg")
+		require.NoError(t, err)
+		require.Equal(t, "something.large.jpg", target)
+	})
+
+}

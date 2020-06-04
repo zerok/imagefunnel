@@ -92,6 +92,19 @@ func main() {
 					}); err != nil {
 						logger.Fatal().Err(err).Msgf("Failed to upload %s", o)
 					}
+					// Make source image public too
+					s := minio.NewSourceInfo(bucketName, f, nil)
+					d, err := minio.NewDestinationInfo(bucketName, f, nil, map[string]string{
+						"x-amz-acl": "public-read",
+					})
+					if err != nil {
+						logger.Error().Err(err).Msgf("Failed to generate destinationinfo for %s", f)
+						continue
+					}
+					if err := client.CopyObject(d, s); err != nil {
+						logger.Error().Err(err).Msgf("Failed to update metadata on %s", f)
+						continue
+					}
 				} else {
 					logger.Debug().Msgf("Skipping %s -> %s", f, o)
 				}

@@ -21,7 +21,7 @@ func (r *ImageMagickResizer) Resize(ctx context.Context, out string, in string, 
 	if err != nil {
 		return err
 	}
-	logger.Debug().Msgf("%s -> %s", in, out)
+	logger.Trace().Msgf("%s -> %s", in, out)
 	// First, we need to learn the dimensions of the input image
 	width, height, err := r.dimensions(ctx, in)
 	if err != nil {

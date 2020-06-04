@@ -17,7 +17,9 @@ import (
 func main() {
 	var logger zerolog.Logger
 	var profilePaths []string
+	var pathPrefix string
 	pflag.StringSliceVar(&profilePaths, "profile", []string{}, "Profile documents that should be processed for the specified input")
+	pflag.StringVar(&pathPrefix, "s3-path-prefix", "photos/", "Prefix of files inside the bucket to be considered")
 	pflag.Parse()
 
 	logger = zerolog.New(zerolog.ConsoleWriter{Out: os.Stderr}).With().Timestamp().Logger()
@@ -61,7 +63,7 @@ func main() {
 	done := make(chan struct{})
 	defer close(done)
 	existingFiles := make(map[string]struct{})
-	for o := range client.ListObjectsV2(bucketName, "photos/", true, done) {
+	for o := range client.ListObjectsV2(bucketName, pathPrefix, true, done) {
 		existingFiles[o.Key] = struct{}{}
 	}
 

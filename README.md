@@ -30,3 +30,11 @@ target:
   landscape_size: "1000x"
 ```
 
+If you don't explicitly pass a folder to the command then ImageFunnel will look
+for the following environment variables in order to connect to an S3-compatible
+data store:
+
+- `IMAGEFUNNEL_S3_ENDPOINT`
+- `IMAGEFUNNEL_S3_ACCESS_KEY_ID`
+- `IMAGEFUNNEL_S3_SECRET_ACCESS_KEY`
+- `IMAGEFUNNEL_S3_BUCKET`
